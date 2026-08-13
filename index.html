@@ -6,26 +6,36 @@
 <title>丝路四季 · 家蚕分龄四季气候适配数据库</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft Yahei",sans-serif;}
-body{background:#f7f9fc;padding:24px;max-width:1400px;margin:0 auto;}
-h1{text-align:center;color:#2c3e50;margin-bottom:8px;font-size:26px;}
-.desc{text-align:center;color:#666;margin-bottom:22px;}
-.search-box{margin-bottom:20px;}
+body{background:#f7f9fc;padding:24px;max-width:1550px;margin:0 auto;}
+h1{text-align:center;color:#2c3e50;margin-bottom:8px;font-size:24px;}
+.desc{text-align:center;color:#666;margin-bottom:24px;}
+.search-box{margin-bottom:22px;}
 #search{width:100%;padding:12px 16px;font-size:16px;border:1px solid #cbd5e0;border-radius:8px;outline:none;}
-#search:focus{border-color:#2b6cb0;}
+#search:focus{border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.2);}
 .table-wrap{overflow-x:auto;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.08);}
-table{width:100%;border-collapse:collapse;min-width:1200px;}
-th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #e2e8f0;font-size:14px;}
+table{width:100%;border-collapse:collapse;min-width:1600px;}
+th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #e2e8f0;font-size:13.5px;line-height:1.6;}
 th{background:#2b6cb0;color:#fff;font-weight:500;}
 tr:hover{background:#f0f7ff;}
-.footer{margin-top:24px;text-align:center;color:#888;font-size:14px;}
+.footer{margin-top:28px;text-align:center;color:#888;font-size:14px;}
+.area-zj{color:#2b6cb0;font-weight:500;}
+.area-national{color:#38a169;font-weight:500;}
+.batch-tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:12px;color:#fff;margin:2px;}
+.batch-earlySpring{background:#67c23a;}
+.batch-springSummer{background:#409eff;}
+.batch-earlyAutumn{background:#e6a23c;}
+.batch-midAutumn{background:#f56c6c;}
+.batch-lateAutumn{background:#9c88ff;}
+.batch-winter{background:#36cfc9;}
+.species-tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:12px;margin:2px;background:#f0f2f5;color:#333;}
 </style>
 </head>
 <body>
 <h1>丝路四季 · 家蚕分龄四季气候适配数据库</h1>
-<div class="desc">分小蚕/大蚕期温湿度参数｜四季适配选型｜智能养蚕环境参数库</div>
+<div class="desc">适配全年6-8批循环养蚕｜六大养殖批次匹配｜品种特性+适配组合+地域适配+分龄温湿度+饲养要点+精准禁忌</div>
 
 <div class="search-box">
-  <input id="search" placeholder="🔍 搜索品种、季节、温湿度、饲养要点..." />
+  <input id="search" placeholder="🔍 搜索品种、养殖批次、品种特性、适配组合、地域、温湿度..." />
 </div>
 
 <div class="table-wrap">
@@ -33,13 +43,17 @@ tr:hover{background:#f0f7ff;}
   <thead>
     <tr>
       <th>库编号</th>
-      <th>蚕品种</th>
-      <th>适宜饲养季节</th>
-      <th>小蚕期温湿度</th>
-      <th>大蚕期温湿度</th>
-      <th>整体气候要求</th>
-      <th>核心饲养要点</th>
-      <th>禁忌与注意事项</th>
+      <th>蚕品种（核心特性）</th>
+      <th>适配搭配品种</th>
+      <th>适配养殖地域</th>
+      <th>适配全年养殖批次（6-8批）</th>
+      <th>批次适配说明</th>
+      <th>小蚕期温湿度标准</th>
+      <th>大蚕期温湿度标准</th>
+      <th>适配气候特征</th>
+      <th>小蚕核心饲养要点</th>
+      <th>大蚕核心饲养要点</th>
+      <th>分龄养殖禁忌事项</th>
     </tr>
   </thead>
   <tbody id="tableBody">
@@ -48,48 +62,378 @@ tr:hover{background:#f0f7ff;}
 </div>
 
 <div class="footer">
-本数据库为四季循环养蚕系统提供标准化环境阈值参数｜数据由蚕桑试验基地实测校准
+数据库适配丝路四季全年6-8批循环养蚕项目｜六大养殖批次精准匹配｜新旧全品种全覆盖+品种搭配体系完善
 </div>
 
 <script>
-// 蚕品种数据库完整数据（可自主增删修改）
+// 适配项目【全年6-8批、六大养殖批次】最全蚕种数据库
+// 批次定义：早春、春夏、早秋、中秋、晚秋、冬季（设施加温）
+// 新增全套搭配品种、品种专属特性、适配组合体系
 const dataList = [
+  // 1. 菁松×皓月 多特性细分品种（核心优质春用种、丝质最优、设施恒温首选）
   {
-    code:"CAN-001-QF-BY",
-    name:"秋丰×白玉",
-    season:"春季、秋季最优；夏季可养；冬季加温可控饲养",
-    tempSmall:"25.5-27℃，湿度85%-90%",
-    tempBig:"23-25℃，湿度75%-80%",
-    climate:"适应性强，耐温差小，适合规模化多批次循环养殖；需通风干爽环境，忌长期闷热高湿",
-    keyPoint:"小蚕高温高湿保发育整齐；大蚕低温通风保茧质；按时扩座、匀座、良桑饱食；批次化管理控密度",
-    notice:"夏季高温易爆发血液型脓病；冬季自然低温发育迟缓，必须地暖加温稳温；大蚕切忌闷湿"
-  },
-  {
-    code:"CAN-002-HJJ-01",
-    name:"黄金茧（彩色茧品种）",
-    season:"春季、秋季适宜；夏季慎养；冬季加温精细饲养",
-    tempSmall:"26-27.5℃，湿度83%-88%",
-    tempBig:"24-26℃，湿度73%-78%",
-    climate:"体质偏弱、喜温和气候，不耐极端高温高湿，昼夜温差需控制在2-3℃以内",
-    keyPoint:"全程精细化管理，桑叶要求鲜嫩无泥沙无发热；小蚕严格恒温保湿；大蚕加强通风、稀座饲养",
-    notice:"抗逆性差，高温易减收、易僵病；湿度偏高极易发霉死蚕；不适合粗放夏季养殖"
-  },
-  {
-    code:"CAN-003-JS-HY",
-    name:"菁松×皓月",
-    season:"春、秋主养品种，稳定性强，四季适配性优秀",
+    code:"CAN-002-JS-HY-01",
+    name:"菁松×皓月（春用优质种）",
+    match:"秋丰×白玉、春蕾×镇珠",
+    area:"<span class='area-national'>全国各蚕区通用</span>，适配江浙、四川、山东等主产区",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"全年全批次适配标杆春用品种，早春、春夏养殖品质最优，多批次连续养殖稳定性极强，适合项目高频6-8批常态化循环生产",
     tempSmall:"25-27℃，湿度84%-89%",
     tempBig:"22.5-24.5℃，湿度74%-79%",
-    climate:"体质强健、发育整齐，耐饲养，适合多批次连续生产，环境容错率高",
-    keyPoint:"小蚕期保温保湿保证群体整齐；大蚕期通风换气，杜绝高温闷热；合理用叶、适时眠起处理",
-    notice:"高湿环境易诱发曲霉病；夏季需降温除湿，避免连续30℃以上环境饲养"
+    climate:"适配春季温和湿润、四季常规气候，环境容错率高，耐轻度温差、轻度潮湿，丝质稳定性极佳，不喜极端高温闷热",
+    keySmall:"全程恒温保湿，严控温湿度波动，保证春季批次群体眠起整齐统一；合理控制给桑量，及时清理残叶，避免蚕座潮湿发霉，保障批次衔接稳定",
+    keyBig:"强化通风换气，降低养殖环境湿度，规范眠起处理流程；根据多批次养殖节奏及时扩座，保障春批优质茧产出，稳定批次产量与丝质",
+    notice:"小蚕忌温湿度骤变，易引发春季批次眠起不齐、批次延迟；大蚕忌高湿密闭环境，极易诱发曲霉病，春夏批次温度超30℃需强制降温除湿"
+  },
+  {
+    code:"CAN-002-JS-HY-02",
+    name:"菁松×皓月（茧丝质最优）",
+    match:"秋丰×白玉、金蚕1号、华康2号",
+    area:"<span class='area-national'>全国高端丝质产区主推</span>，浙江、江苏高端茧核心养殖品种",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(精细加温)</span>",
+    batchDesc:"高端丝质专属品种，主打早春、春夏、晚秋优质批次，丝长、丝匀、洁净度高，适配项目高品质茧产出批次，冬季精细温控可补批",
+    tempSmall:"25.5-27℃，湿度85%-90%",
+    tempBig:"23-24.5℃，湿度73%-78%",
+    climate:"偏好温和稳定、温差小的气候，无极端高温高湿，适配精细化设施养殖，丝质性状在稳定环境下表现最优",
+    keySmall:"精准恒温恒湿养护，杜绝环境波动，保障每批次蚕体发育均匀，奠定优质丝质基础；优选鲜嫩无污桑叶，杜绝劣质桑叶影响茧丝品质",
+    keyBig:"稀座通风养殖，拉大干湿温差，良桑饱食不拥挤；严控养殖环境洁净，减少茧丝杂质，最大化发挥优质丝质品种优势",
+    notice:"小蚕忌温湿度波动、桑叶劣质，易导致丝质粗细不均；大蚕忌高温闷热、高密度养殖，会大幅降低茧丝等级，影响高端批次品质"
+  },
+  {
+    code:"CAN-002-JS-HY-03",
+    name:"菁松×皓月（设施恒温下优质首选）",
+    match:"秋丰×白玉、广食性人工饲料专用种",
+    area:"<span class='area-national'>全国设施化养蚕基地专属</span>，适配四季恒温可控养殖场景",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(恒温)</span>",
+    batchDesc:"设施恒温专属首选品种，完全适配项目全年6-8批循环养殖，人工饲料、桑叶养殖均可适配，批次稳定性、品质统一性为全品种最优",
+    tempSmall:"25-26.5℃，湿度84%-88%（恒温恒定）",
+    tempBig:"22.5-24℃，湿度74%-78%（恒温恒定）",
+    climate:"适配全季节设施恒温环境，不受外界气候干扰，耐连续批次养殖、耐人工饲料饲养，性状稳定无退化",
+    keySmall:"全程设备恒温恒湿锁定参数，无需随外界气候大幅调整；人工饲料养殖需定时补湿，桑叶养殖保证饲料新鲜，批次切换无需缓苗",
+    keyBig:"标准化批次管理，统一扩座、除沙、眠起流程，适配高频次循环养殖；恒温环境下适度密养，提升批次产能且保障品质稳定",
+    notice:"小蚕忌设备温湿度频繁调试、环境波动；大蚕忌恒温环境高湿密闭、通风缺失，易引发隐性病害，影响多批次连续养殖"
+  },
+
+  // 2. 秋丰×白玉 多特性细分品种
+  {
+    code:"CAN-001-QF-BY-01",
+    name:"秋丰×白玉（春秋兼用强健种）",
+    match:"两广二号、781×7532、华康2号",
+    area:"<span class='area-national'>全国通用</span>，<span class='area-zj'>浙江杭州、嘉兴、湖州核心主推</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"全批次主力强健品种，春秋核心批次稳产性极强，夏秋高温、冬季加温批次适配性优异，体质强健、抗逆性强，适配全年6-8批高频循环养殖",
+    tempSmall:"25.5-27℃，湿度85%-90%",
+    tempBig:"23-25℃，湿度75%-80%",
+    climate:"适配温和、通风干爽气候，耐小幅温差、耐轻度高温高湿，强健性突出，适配四季设施可控多批次连续生产",
+    keySmall:"高温高湿稳苗，保证蚁蚕孵化整齐、眠起统一；及时匀座扩座，适配多批次密集育苗节奏，夯实强健蚕体基础",
+    keyBig:"低温通风养殖，拉大干湿温差，良桑饱食；勤除蚕沙、严控密度，适配高频批次周转，稳产不降级",
+    notice:"小蚕禁忌低温低湿，易发育迟缓、大小分化，延误批次衔接；大蚕禁忌闷热密闭，高温批次易诱发病害，无加温设备禁止冬季露天养殖"
+  },
+  {
+    code:"CAN-001-QF-BY-02",
+    name:"秋丰×白玉（耐氟、体质强）",
+    match:"菁松×皓月、金蚕1号",
+    area:"<span class='area-national'>全国工矿、轻度污染蚕区适配</span>，浙江全域主推",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span>",
+    batchDesc:"耐氟抗逆专属品种，适配多批次密集养殖、环境轻微污染场景，体质远超普通品种，全年春秋夏秋批次均可稳定养殖，病害率极低",
+    tempSmall:"25-27℃，湿度84%-89%",
+    tempBig:"22.5-24.5℃，湿度74%-79%",
+    climate:"耐环境胁迫、耐轻度氟污染、耐温差波动，适配复杂田间及设施养殖环境，多批次连续养殖体质无衰退",
+    keySmall:"常规温湿度养护即可，无需精细化严苛管控，适应性强；重点做好蚕座基础清洁，维持群体整齐发育",
+    keyBig:"粗放可控养殖，通风除沙常态化即可，适配高频次批次生产，兼顾产能与成活率",
+    notice:"小蚕忌长期恶劣密闭环境，虽耐胁迫但仍需基础通风；大蚕忌持续高湿闷热，易突破抗逆阈值引发病害"
+  },
+
+  // 3. 耐高温强健种核心品种
+  {
+    code:"CAN-004-LYG-2H-01",
+    name:"两广二号（耐高温强健种）",
+    match:"781×7532、锦绣×潇湘、金蚕1号",
+    area:"<span class='area-national'>南方全域通用</span>，两广、福建、江西、浙南适配",
+    batch:"<span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"项目高温批次专属核心强健品种，专攻春夏、早秋、中秋高温闷热批次，耐高温高湿、体质强健，完美填补高温季节稳产缺口，是夏秋多批次养殖主力",
+    tempSmall:"26-27.5℃，湿度85%-90%",
+    tempBig:"24-26℃，湿度76%-82%",
+    climate:"耐高温、耐高湿、抗逆性极强，适配春夏夏秋高温多雨、闷热潮湿、寡照的极端批次气候，环境适配容错率最高",
+    keySmall:"高温恒温快速促发育，保证高温批次收蚁整齐、生长统一；高频巡检蚕座，及时清理残叶杂物，适配高温高湿养殖环境",
+    keyBig:"加大通风频次，勤除沙、勤扩座；高温批次适度稀座，足量投喂新鲜桑叶，保障高温批次良桑饱食、稳产不减产",
+    notice:"小蚕忌春夏批次低温阴冷，易生长停滞、批次延期；大蚕忌夏秋批次闷热密闭、积水潮湿，多雨季节严控蚕座湿度，预防细菌性病害爆发"
+  },
+
+  // 4. 本次新增全新品种
+  {
+    code:"CAN-018-CL-ZZ",
+    name:"春蕾×镇珠（春秋优质茧种）",
+    match:"菁松×皓月、秋丰×白玉",
+    area:"<span class='area-national'>长江流域、江浙主产区通用</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-lateAutumn'>晚秋</span>",
+    batchDesc:"传统春秋优质茧品种，茧形大、丝质优，适配项目早春、春夏、晚秋优质批次，适合搭配菁松×皓月、秋丰×白玉混养稳产",
+    tempSmall:"25-26.5℃，湿度85%-89%",
+    tempBig:"22.5-24℃，湿度74%-79%",
+    climate:"适配春季温润、秋季干爽气候，不耐高温闷热，温和环境下茧质表现极佳",
+    keySmall:"稳温保湿，杜绝早春低温倒春寒，保证群体发育整齐，夯实优质茧基础",
+    keyBig:"适度通风控湿，避免高湿霉变，春秋批次良桑饱食，提升茧形规整度",
+    notice:"小蚕忌低温波动、干燥低湿；大蚕忌夏秋高温养殖，极易减产、茧质变差"
+  },
+  {
+    code:"CAN-019-JC-7875",
+    name:"781×7532（夏秋强健高产种）",
+    match:"两广二号、秋丰×白玉、华康2号",
+    area:"<span class='area-national'>南方、江南夏秋蚕区专属</span>，浙南、两广适配",
+    batch:"<span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span>",
+    batchDesc:"夏秋高产强健品种，适配项目春夏至中秋高温高湿批次，产量稳定、抗病性强，是高温批次搭配养殖核心品种",
+    tempSmall:"26-27℃，湿度84%-89%",
+    tempBig:"23.5-25.5℃，湿度75%-81%",
+    climate:"适配夏秋高温多雨、湿度偏高的气候，耐粗放养殖、产量稳定性突出",
+    keySmall:"高温稳温促生长，及时匀座扩座，适配夏秋快速生长节奏",
+    keyBig:"勤除沙、强通风，高温批次稀座养殖，保障高产稳产，适配多批次连续生产",
+    notice:"小蚕忌低温潮湿；大蚕忌高温密闭、通风不足，易诱发细菌性病害"
+  },
+  {
+    code:"CAN-020-JX-XX",
+    name:"锦绣×潇湘（南方耐高温优质种）",
+    match:"两广二号、金蚕1号",
+    area:"<span class='area-national'>湖南、江西、浙南、华南通用</span>",
+    batch:"<span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span>",
+    batchDesc:"南方专属耐高温优质品种，兼顾产量与丝质，适配春夏、早秋、中秋高温批次，适合与两广二号搭配混养，均衡品质与产能",
+    tempSmall:"26.5-27.5℃，湿度84%-88%",
+    tempBig:"24-25.5℃，湿度74%-80%",
+    climate:"耐高温、耐高湿，适配南方夏秋闷热多雨气候，丝质优于常规夏秋品种",
+    keySmall:"恒温保湿，保证高温批次孵化整齐，规避高温应激影响发育",
+    keyBig:"通风降温、适时给桑，高温时段减少环境扰动，稳定结茧品质",
+    notice:"小蚕忌温度骤降、湿度不足；大蚕忌持续极端高温，易出现熟蚕不齐"
+  },
+  {
+    code:"CAN-021-JC-1H",
+    name:"金蚕1号（高抗优质兼用种）",
+    match:"菁松×皓月、秋丰×白玉、两广二号、锦绣×潇湘",
+    area:"<span class='area-national'>全国多气候区通用</span>，南北蚕区均可适配",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span>",
+    batchDesc:"全能型兼用品种，抗病、优质、高产兼备，适配项目春、夏、秋全批次，可与绝大多数品种搭配混养，适配多批次循环稳产体系",
+    tempSmall:"25.5-27℃，湿度84%-89%",
+    tempBig:"23-25℃，湿度74%-79%",
+    climate:"四季适配性强，耐湿热、耐温差、抗病性突出，兼顾优质丝质与高产性状",
+    keySmall:"常规精细化养护即可，发育整齐度高，适配多批次衔接节奏",
+    keyBig:"均衡通风与湿度，良桑饱食，高密度批次养殖仍可保持低病害、高品质",
+    notice:"小蚕忌粗放管理、温湿度紊乱；大蚕忌长期高湿密闭，削弱抗病优质性状"
+  },
+  {
+    code:"CAN-022-GSY-SC",
+    name:"广食性人工饲料专用种（设施专属）",
+    match:"菁松×皓月（设施恒温）",
+    area:"<span class='area-national'>全国设施化、工厂化养蚕基地专属</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(恒温)</span>",
+    batchDesc:"人工饲料专属专用品种，广食性、适配工厂化连续养殖，完美匹配项目全年6-8批设施循环养殖，无需依赖新鲜桑叶，批次周转效率极高",
+    tempSmall:"25-26℃，湿度83%-88%（饲料养殖标准）",
+    tempBig:"22-24℃，湿度72%-78%（饲料养殖标准）",
+    climate:"完全适配室内恒温设施环境，不受外界季节、气候、桑叶周期限制，全年性状稳定",
+    keySmall:"人工饲料定时定量投喂，恒温恒湿稳定环境，无需频繁调整参数，保证批次孵化整齐",
+    keyBig:"标准化批次更替，定期清理饲料残渣、消毒蚕座，适配高频次工厂化循环养殖",
+    notice:"禁止露天自然养殖、禁止完全桑叶单一养殖；忌温湿度大幅波动，易导致摄食不良、发育滞后"
+  },
+
+  // 原有保留经典品种
+  {
+    code:"CAN-005-GC-8H",
+    name:"桂蚕8号（高温多病抗病种）",
+    match:"通用搭配：两广二号、金蚕1号",
+    area:"<span class='area-national'>华南、江南多病高发产区通用</span>，浙南湿热地区适配",
+    batch:"<span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span>",
+    batchDesc:"高温多病批次专用品种，适配春夏、早秋、中秋病害高发批次，抗病性突出，降低多批次养殖病害风险",
+    tempSmall:"26-27℃，湿度84%-88%",
+    tempBig:"23.5-25.5℃，湿度75%-81%",
+    climate:"适配春夏、夏秋高温高湿、病害多发的复杂气候，抗病能力突出，耐湿热、耐轻度污染环境，适配高频次养殖",
+    keySmall:"稳温稳湿恒定养护，减少高温批次环境波动，提升蚕体抗病体质；做好蚕座基础消毒，适配连续多批次养殖防病需求",
+    keyBig:"重点加强通风排湿，减少蚕座污染物残留；合理调整养殖密度，适配春夏、夏秋连续批次生产模式",
+    notice:"小蚕忌高温批次湿度过低、温度不稳，抗病能力下降；大蚕忌夏秋极端连续高温，需定期通风消毒，杜绝多批次交叉感染"
+  },
+  {
+    code:"CAN-008-GC-N2",
+    name:"桂蚕N2（湿热抗逆种）",
+    match:"通用搭配：桂蚕8号、两广二号",
+    area:"<span class='area-national'>南方湿热产区通用</span>，适配浙南、两广多雨高温地区",
+    batch:"<span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span>",
+    batchDesc:"湿热多批次适配品种，适配春夏至晚秋全湿热批次，耐粗放养殖，适合项目高频次过渡批次养殖",
+    tempSmall:"25.5-27℃，湿度84%-89%",
+    tempBig:"23-25℃，湿度74%-80%",
+    climate:"综合抗逆性强，适配春夏、早秋、中秋、晚秋多雨高温高湿气候，环境容错率高，适配连续批次生产",
+    keySmall:"标准化催青稳温稳湿，批次密集期及时匀座扩座，保证每批次群体发育整齐",
+    keyBig:"勤除沙、强通风，防止蚕座淤积潮湿，适配多雨季节连续多批次养殖",
+    notice:"小蚕忌湿热批次长期高湿闷养；大蚕忌阴雨无风环境，极易爆发僵病、细菌病，影响后续批次养殖"
+  },
+  {
+    code:"CAN-007-YC-6H",
+    name:"粤蚕6号（极端高温专用种）",
+    match:"通用搭配：两广二号、锦绣×潇湘",
+    area:"<span class='area-national'>华南高温产区专属</span>，广东、广西、闽南、浙南适配",
+    batch:"<span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span>",
+    batchDesc:"极端高温批次专用，适配春夏、早秋、中秋高温极端天气批次，耐高温性能优于普通品种",
+    tempSmall:"27-28℃，湿度80%-85%",
+    tempBig:"24-26℃，湿度73%-79%",
+    climate:"熟蚕整齐、营茧速度快，适应性强，耐高温、发育稳定，适配春夏夏秋高温批次设施化养殖",
+    keySmall:"催青控温稳定，高温批次收蚁避免过早感光；恒温饲养，保证单批次孵化整齐统一",
+    keyBig:"足量给桑、加强通风，高温批次重点降温，保障极端温度下结茧质量与批次产量",
+    notice:"小蚕忌高温批次感光过早，易蚁蚕逸散、孵化不齐；大蚕忌持续高温闷热，影响营茧效率，耽误批次周转"
+  },
+  {
+    code:"CAN-006-HK-3H",
+    name:"华康3号（全周期抗病种）",
+    match:"通用搭配：所有品种（防病兜底）",
+    area:"<span class='area-national'>全国通用抗病品种</span>，适配多雨高湿、病害多发蚕区",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"全周期抗病保障品种，所有批次均可养殖，尤其适配春夏、夏秋病害高发批次，保障全年多批次稳产",
+    tempSmall:"27-28℃，湿度85%-90%",
+    tempBig:"24-25℃，湿度72%-78%",
+    climate:"适配四季多变气候，耐潮湿、耐养殖密集环境，适配设施化恒温多批次循环养殖体系",
+    keySmall:"1-2龄高温高湿促整齐发育，严控温湿度恒定，做好基础养护，筑牢每批次蚕体抗病体质",
+    keyBig:"拉大干湿温差，强化通风换气；关键龄期规范药物添食，适配密集多批次养殖模式，降低交叉病害风险",
+    notice:"小蚕忌任意批次温湿度偏低，发育不齐且抗病性减弱；大蚕忌高湿密闭，会直接降低品种抗病性能，高温批次严禁闷棚养殖"
+  },
+  {
+    code:"CAN-015-HK-2H",
+    name:"华康2号（脓病专用抗病种）",
+    match:"秋丰×白玉、两广二号、金蚕1号",
+    area:"<span class='area-national'>全国多病蚕区主推</span>，江南、华南高湿地区适配",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span>",
+    batchDesc:"春秋夏秋批次专用抗病品种，专抗家蚕血液型脓病，针对多雨高湿批次病害问题，保障多批次连续养殖无病害断层",
+    tempSmall:"26.5-27.5℃，湿度84%-89%",
+    tempBig:"23.5-25℃，湿度73%-79%",
+    climate:"专抗家蚕血液型脓病，耐潮湿、耐多批次连续养殖，适配设施化循环养殖",
+    keySmall:"恒温保湿稳群体，严控每批次养殖环境卫生，减少病菌滋生",
+    keyBig:"干湿差合理拉大，勤除沙、稀座养殖，降低多批次交叉感染概率",
+    notice:"小蚕忌批次养殖环境脏乱、湿度不足；大蚕忌高温高湿密闭，削弱抗病基因表现，影响后续批次养殖"
+  },
+  {
+    code:"CAN-003-HJJ-01",
+    name:"黄金茧（彩色茧特色品种）",
+    match:"特色搭配：星丝路1号、多彩茧品系",
+    area:"<span class='area-zj'>浙江杭嘉湖、衢州特色养殖核心品种</span>，全国高端特色茧产区适配",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温精细)</span>",
+    batchDesc:"适配温和低应激批次，主打早春、晚秋优质茧批次，冬季精细化加温可养殖，高温夏秋批次不建议批量养殖",
+    tempSmall:"26-27.5℃，湿度83%-88%",
+    tempBig:"24-26℃，湿度73%-78%",
+    climate:"偏好温和稳定的气候，昼夜温差需控制在2-3℃以内，不耐高低温极端天气、不耐闷热潮湿，适配温和批次精细化设施养殖",
+    keySmall:"全程精准恒温保湿，桑叶必须鲜嫩无泥沙、无发热变质；勤匀桑、勤扩座，保证特色批次蚕体发育均匀、茧质优良",
+    keyBig:"采用稀座养殖模式，持续加强通风排湿；严控桑叶品质，保障早春、晚秋特色批次茧色均匀、丝质顶级",
+    notice:"小蚕忌温和批次温差过大、湿度不足，易导致发育畸形；大蚕忌夏秋高温高湿，抗逆性极差，高温批次极易减产、高发僵病"
+  },
+  {
+    code:"CAN-009-CC-CJ",
+    name:"多彩茧品系（绿茧/粉茧）",
+    match:"特色搭配：黄金茧、星丝路1号",
+    area:"<span class='area-zj'>浙江湖州、嘉兴文旅蚕桑基地专属</span>，全国高端特色养殖适配",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(精细温控)</span>",
+    batchDesc:"高端特色批次专属，仅适配早春、晚秋温和批次及冬季精准加温批次，夏秋高温批次禁止规模化养殖",
+    tempSmall:"27.5-28℃，湿度86%-90%",
+    tempBig:"24-25℃，湿度72%-77%",
+    climate:"稚蚕期需偏高温度，昼夜温差严格控制≤2℃，喜清洁、通风、温和环境，极端天气适应性弱，适配温和批次",
+    keySmall:"稚蚕趋光趋密性强，勤匀桑、勤扩座，全程优质鲜嫩桑叶投喂，保障特色批次茧色纯正",
+    keyBig:"稀座稳养、恒温稳湿，严控环境波动，保证每批次茧色统一、品质稳定",
+    notice:"小蚕忌批次温湿度波动大，发育不齐；大蚕忌夏秋高温干旱、高湿霉变，极易造成茧色变异、批次减产"
+  },
+  {
+    code:"CAN-010-QH-P30",
+    name:"秋华×平30（浙北全批次主推）",
+    match:"浙凤3号、丝绵1号",
+    area:"<span class='area-zj'>浙江衢州全域、嘉兴、湖州重点推广品种</span>，浙北主栽",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"浙北本地全批次适配品种，完美适配杭嘉湖衢6-8批循环模式，本地气候适配度最高，各批次养殖稳定性强",
+    tempSmall:"25.5-27℃，湿度84%-88%",
+    tempBig:"23-25℃，湿度74%-79%",
+    climate:"适配浙北湿润温和气候，耐春季低温、适配秋季干爽天气，适配江南多雨水、小温差的四季批次环境",
+    keySmall:"针对早春批次倒春寒做好保温保湿，稳定蚕体发育；贴合本地桑期投喂适龄桑叶，保证每批次生长同步",
+    keyBig:"春夏多雨批次适度通风控湿，秋季干燥批次适当补湿；规范扩座匀座，适配本地多批次养殖节奏",
+    notice:"小蚕忌早春批次低温受凉，易引发眠起紊乱、批次延迟；大蚕忌秋季批次干燥缺水、桑叶干枯，多雨批次忌蚕座积水发霉"
+  },
+  {
+    code:"CAN-011-ZF-3H",
+    name:"浙凤3号（浙江全域全批次新品种）",
+    match:"秋华×平30、中2016×日2016",
+    area:"<span class='area-zj'>浙江全省主推，杭嘉湖、衢州核心示范品种</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"浙江专属全批次新品种，专为本地四季多批次养殖选育，适配全年6-8批循环生产，稳产性优异",
+    tempSmall:"26-27℃，湿度85%-89%",
+    tempBig:"23.5-25℃，湿度75%-80%",
+    climate:"专为浙江江南气候选育，适配全年湿润、温差小、雨水充沛的地域气候，设施多批次养殖适配性极强",
+    keySmall:"严格恒温恒湿管理，统一每批次群体发育节奏；精细化管控给桑量，杜绝批次内大小蚕分化",
+    keyBig:"适配规模化多批次生产，合理稀座通风，根据四季不同批次气候微调温湿度，保障全年稳产高产",
+    notice:"小蚕忌任意批次粗放管理、温湿度波动大；大蚕忌高密度批次养殖、通风不足，易出现发育不齐、茧质下降"
+  },
+  {
+    code:"CAN-012-SM-1H",
+    name:"丝绵1号（杭嘉湖丝绵专用种）",
+    match:"星丝路1号、浙秋2号",
+    area:"<span class='area-zj'>浙江嘉兴桐乡核心专属品种</span>，杭嘉湖丝绵专用主栽品种</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"丝绵专用优质品种，适配早春、中秋、晚秋优质批次，冬季加温可补批，主打多批次高品质丝绵原料产出",
+    tempSmall:"25-26.5℃，湿度84%-88%",
+    tempBig:"22.5-24.5℃，湿度73%-78%",
+    climate:"适配杭嘉湖平原湿润、四季温和、少极端天气的气候，适配本地桑树生长周期，多批次茧质稳定性高",
+    keySmall:"保温保湿稳群体，优先选用本地优质鲜嫩桑叶，严控每批次养殖环境洁净度，保障茧质统一",
+    keyBig:"侧重通风护茧，严控批次养殖环境湿度，避免茧体受潮霉变，适配多批次丝绵加工品质要求",
+    notice:"小蚕忌批次养殖湿度波动过大，影响蚕体体质；大蚕忌高湿密闭批次环境，极易导致茧质霉变，降低多批次加工品质"
+  },
+  {
+    code:"CAN-013-XSL-1H",
+    name:"星丝路1号（湖州特色专属种）",
+    match:"黄金茧、丝绵1号",
+    area:"<span class='area-zj'>浙江湖州农科院选育、湖州全域主推特色品种</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(精细加温)</span>",
+    batchDesc:"湖州特色专属批次品种，适配早春、晚秋优质特色茧批次，冬季精细化养殖可新增特色批次，丰富多批次产品结构",
+    tempSmall:"26.5-27.5℃，湿度84%-88%",
+    tempBig:"24-25.5℃，湿度73%-77%",
+    climate:"适配浙北温和湿润气候，不喜高温干旱、不喜严寒潮湿，气候适配稳定性强，多批次茧色均匀度高",
+    keySmall:"全程精准恒温稳湿，杜绝批次间环境波动，保障每批次茧色底色统一；勤匀桑、勤扩座，避免趋密发育不良",
+    keyBig:"高温夏秋批次做好降温保湿，优选鲜嫩桑叶；稳定通风环境，保障特色批次丝质与茧色品质",
+    notice:"小蚕忌批次温差突变，易导致茧色底色不均；大蚕忌夏秋高温干旱批次，会造成茧色变淡、丝质下降"
+  },
+  {
+    code:"CAN-014-ZR-2016",
+    name:"中2016×日2016（衢州山区适配种）",
+    match:"浙凤3号、秋华×平30",
+    area:"<span class='area-zj'>浙江衢州官方重点推介主导品种</span>，浙西山区适配</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"浙西山区多批次适配品种，适配山区早春、全秋季批次，冬季加温可补批，适配衢州本地6-8批循环模式",
+    tempSmall:"25.5-27℃，湿度83%-87%",
+    tempBig:"23-24.5℃，湿度74%-78%",
+    climate:"适配浙西山区昼夜小幅温差、湿润多雾、空气湿度大的特殊气候，耐轻度低温高湿，适配山区多批次养殖",
+    keySmall:"重点做好早春批次保温防低温，规避山区昼夜温差影响；稳定湿度，保证每批次蚕体正常发育",
+    keyBig:"多雾秋季批次增加通风散雾频次，及时清理蚕座湿气，严防潮湿淤积，适配山区多批次养殖环境",
+    notice:"小蚕忌山区早春批次夜间低温受凉；大蚕忌秋季多雾高湿、通风不足，极易滋生僵病、霉菌病害，影响连续批次养殖"
+  },
+  {
+    code:"CAN-016-ZJ-CH",
+    name:"浙春1号（浙江春季专属种）",
+    match:"菁松×皓月、春蕾×镇珠",
+    area:"<span class='area-zj'>浙江杭嘉湖春季专属主推品种</span>",
+    batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
+    batchDesc:"春季专属核心品种，主打项目早春、春夏批次，填补春季多批次养殖刚需，冬季加温可灵活补批",
+    tempSmall:"25-26.5℃，湿度85%-90%",
+    tempBig:"22.5-24℃，湿度74%-80%",
+    climate:"适配浙江春季湿润、回暖平缓、少高温的气候，耐寒性优于普通品种，完美适配春季多批次养殖",
+    keySmall:"早春批次重点保温，防止倒春寒冻伤蚕体，保障春季首批次稳定发育、按期出栏",
+    keyBig:"春夏多雨批次适度通风、稳湿保茧，适配春季多雨天气，保障春季连续批次产量",
+    notice:"小蚕忌早春批次低温波动，易延误首批次养殖周期；大蚕忌春夏批次春雨连绵高湿闷座，引发病害"
+  },
+  {
+    code:"CAN-017-ZJ-XQ",
+    name:"浙秋2号（浙江秋季专属种）",
+    match:"两广二号、金蚕1号",
+    area:"<span class='area-zj'>浙江嘉兴、湖州秋季核心专用品种</span>",
+    batch:"<span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span>",
+    batchDesc:"秋季专属专用品种，全覆盖项目早秋、中秋、晚秋三批次，是秋季多批次循环养殖的核心主力品种",
+    tempSmall:"25.5-27℃，湿度84%-89%",
+    tempBig:"23-25℃，湿度73%-79%",
+    climate:"适配秋季干爽、昼夜温差略大的气候，耐干燥、茧质优、稳产性强，适配秋季密集多批次养殖",
+    keySmall:"秋季批次稳温保湿，弥补秋季空气干燥缺陷，保证每批次蚕体水润发育、整齐统一",
+    keyBig:"秋季干燥批次适当补湿、加强通风，防止桑叶干枯、采食不足，保障秋季多批次连续稳产",
+    notice:"小蚕忌秋季批次干燥低湿，发育迟缓；大蚕忌秋季昼夜温差过大，易眠起紊乱，打乱批次周转节奏"
   }
 ];
 
 const tableBody = document.getElementById('tableBody');
 const searchInput = document.getElementById('search');
 
-// 渲染表格数据
 function render(list){
   tableBody.innerHTML = '';
   list.forEach(item=>{
@@ -97,21 +441,24 @@ function render(list){
     tr.innerHTML = `
       <td>${item.code}</td>
       <td><strong>${item.name}</strong></td>
-      <td>${item.season}</td>
+      <td>${item.match}</td>
+      <td>${item.area}</td>
+      <td>${item.batch}</td>
+      <td>${item.batchDesc}</td>
       <td>${item.tempSmall}</td>
       <td>${item.tempBig}</td>
       <td>${item.climate}</td>
-      <td>${item.keyPoint}</td>
+      <td>${item.keySmall}</td>
+      <td>${item.keyBig}</td>
       <td>${item.notice}</td>
     `;
     tableBody.appendChild(tr);
   })
 }
 
-// 初始渲染全部数据
 render(dataList);
 
-// 全局模糊搜索功能
+// 支持按批次、季节、品种、特性、搭配组合、地域全维度搜索
 searchInput.addEventListener('input',function(){
   const kw = this.value.trim().toLowerCase();
   const filter = dataList.filter(d=>{
