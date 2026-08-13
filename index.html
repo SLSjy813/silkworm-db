@@ -56,8 +56,7 @@ tr:hover{background:#f0f7ff;}
       <th>分龄养殖禁忌事项</th>
     </tr>
   </thead>
-  <tbody id="tableBody">
-  </tbody>
+  <tbody id="tableBody"></tbody>
 </table>
 </div>
 
@@ -321,7 +320,7 @@ const dataList = [
     code:"CAN-009-CC-CJ",
     name:"多彩茧品系（绿茧/粉茧）",
     match:"特色搭配：黄金茧、星丝路1号",
-    area:"<span class='area-zj'>浙江湖州、嘉兴文旅蚕桑基地专属</span>，全国高端特色养殖适配",
+    area:"<span class='area-zj'>浙江湖州、嘉兴文旅蚕桑基地专属</span>，全国高端特色养殖适配</span>",
     batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(精细温控)</span>",
     batchDesc:"高端特色批次专属，仅适配早春、晚秋温和批次及冬季精准加温批次，夏秋高温批次禁止规模化养殖",
     tempSmall:"27.5-28℃，湿度86%-90%",
@@ -335,7 +334,7 @@ const dataList = [
     code:"CAN-010-QH-P30",
     name:"秋华×平30（浙北全批次主推）",
     match:"浙凤3号、丝绵1号",
-    area:"<span class='area-zj'>浙江衢州全域、嘉兴、湖州重点推广品种</span>，浙北主栽",
+    area:"<span class='area-zj'>浙江衢州全域、嘉兴、湖州重点推广品种</span>，浙北主栽</span>",
     batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
     batchDesc:"浙北本地全批次适配品种，完美适配杭嘉湖衢6-8批循环模式，本地气候适配度最高，各批次养殖稳定性强",
     tempSmall:"25.5-27℃，湿度84%-88%",
@@ -349,7 +348,7 @@ const dataList = [
     code:"CAN-011-ZF-3H",
     name:"浙凤3号（浙江全域全批次新品种）",
     match:"秋华×平30、中2016×日2016",
-    area:"<span class='area-zj'>浙江全省主推，杭嘉湖、衢州核心示范品种</span>",
+    area:"<span class='area-zj'>浙江全省主推，杭嘉湖、衢州核心示范品种</span></span>",
     batch:"<span class='batch-tag batch-earlySpring'>早春</span><span class='batch-tag batch-springSummer'>春夏</span><span class='batch-tag batch-earlyAutumn'>早秋</span><span class='batch-tag batch-midAutumn'>中秋</span><span class='batch-tag batch-lateAutumn'>晚秋</span><span class='batch-tag batch-winter'>冬季(加温)</span>",
     batchDesc:"浙江专属全批次新品种，专为本地四季多批次养殖选育，适配全年6-8批循环生产，稳产性优异",
     tempSmall:"26-27℃，湿度85%-89%",
@@ -458,7 +457,7 @@ function render(list){
 
 render(dataList);
 
-// 支持按批次、季节、品种、特性、搭配组合、地域全维度搜索
+// 全维度搜索
 searchInput.addEventListener('input',function(){
   const kw = this.value.trim().toLowerCase();
   const filter = dataList.filter(d=>{
