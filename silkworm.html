@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>丝路四季・桑蚕分龄段养殖数据库</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft Yahei",sans-serif;}
+body{background:#f7f9fc;padding:24px;max-width:1600px;margin:0 auto;}
+h1{text-align:center;color:#2c3e50;margin-bottom:8px;font-size:24px;}
+h2{margin-top:32px;margin-bottom:8px;text-align:center;color:#2c3e50;font-size:20px;}
+.desc{text-align:center;color:#666;margin-bottom:24px;}
+.search-box{margin-bottom:22px;}
+input{width:100%;padding:12px 16px;font-size:16px;border:1px solid #cbd5e0;border-radius:8px;outline:none;}
+input:focus{border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.2);}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.08);margin-bottom:12px;}
+table{width:100%;border-collapse:collapse;}
+th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #e2e8f0;font-size:13.5px;line-height:1.6;}
+th{background:#2b6cb0;color:#fff;font-weight:500;}
+tr:hover{background:#f0f7ff;}
+.footer{margin-top:36px;text-align:center;color:#888;font-size:14px;}
+.area-zj{color:#2b6cb0;font-weight:500;}
+.area-national{color:#38a169;font-weight:500;}
+.batch-tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:12px;color:#fff;margin:2px;}
+.batch‑earlySpring{background:#67c23a;}
+.batch‑spring{background:#27ae60;}
+.batch‑summer{background:#f39c12;}
+.batch‑earlyAutumn{background:#e6a23c;}
+.batch‑midAutumn{background:#f56c6c;}
+.batch‑lateAutumn{background:#9c88ff;}
+.batch‑winter{background:#36cfc9;}
+.species-tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:12px;margin:2px;background:#f0f2f5;color:#333;}
+.stage-tag{display:inline-block;padding:3px 7px;border-radius:4px;font-size:12px;color:#fff;background:#3498db;}
+</style>
+</head>
+<body>
+<h1>丝路四季・桑蚕分龄段养殖数据库</h1>
+<div class="desc">桑蚕品种气候适配｜分龄阶段智能饲养｜全年多批循环养蚕｜主控板全自动调温调湿+平台远程监控，空调执行温湿度调节</div>
+
+<h2>一、桑蚕分龄四季气候适配数据库（品种库）</h2>
+<div class="search-box">
+  <input id="searchBreed" placeholder="🔍 搜索品种、养殖季节、特性、地域、温湿度..." />
+</div>
+<div class="table-wrap">
+<table id="breedTable">
+  <thead>
+    <tr>
+      <th>库编号</th>
+      <th>蚕品种（核心特性）</th>
+      <th>适配搭配品种</th>
+      <th>适配养殖地域</th>
+      <th>适配养殖季节</th>
+      <th>季节适配说明</th>
+      <th>小蚕期温湿度标准</th>
+      <th>大蚕期温湿度标准</th>
+      <th>适配气候特征</th>
+      <th>小蚕核心饲养要点</th>
+      <th>大蚕核心饲养要点</th>
+      <th>分龄养殖禁忌事项</th>
+    </tr>
+  </thead>
+  <tbody id="breedBody"></tbody>
+</table>
+</div>
+
+<h2>二、桑蚕分龄阶段饲养数据库（龄期库）</h2>
+<div class="search-box">
+  <input id="searchStage" placeholder="🔍 搜索龄期、温度、湿度、持续天数、病害、通风、注意事项..." />
+</div>
+<div class="table-wrap">
+<table id="stageTable">
+  <thead>
+    <tr>
+      <th>发育阶段编号</th>
+      <th>发育阶段名称</th>
+      <th>适宜温度</th>
+      <th>适宜相对湿度</th>
+      <th>持续天数</th>
+      <th>通风换气管理</th>
+      <th>主要病虫害风险</th>
+      <th>病虫害防治要点</th>
+      <th>核心饲养注意事项</th>
+    </tr>
+  </thead>
+  <tbody id="stageBody"></tbody>
+</table>
+</div>
+
+<div class="footer">
+数据库适配丝路四季全年多批次循环养蚕项目｜智能主控板全自动调控｜空调恒温恒湿执行｜云端远程监控管理系统
+</div>
+
+<script>
+const breedDataList = [
+  {
+    code:"CAN-001-QF-BY-01",
+    name:"秋丰×白玉（春秋兼用强健种）",
+    match:"两广二号、781×7532、华康2号",
+    area:"<span class='area-national'>全国通用</span>，<span class='area-zj'>浙江杭州、嘉兴、湖州核心主推</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"全季节主力强健品种，春、秋季节稳产性极强。依托主控板下发指令控制空调完成加温、降温、除湿，实现夏、冬季反季节养蚕，适配全年高频循环智能化养殖。",
+    tempSmall:"25.5‑27℃，湿度85%‑90%（主控板下发指令由空调恒定）",
+    tempBig:"23‑25℃，湿度75%‑80%（主控板下发指令由空调恒定）",
+    climate:"室内设备可控养殖环境，耐小幅设备温差波动、耐轻度高温高湿，强健性突出。",
+    keySmall:"平台预设目标参数，主控板联动空调自动维稳，保证蚁蚕孵化整齐眠起统一；及时匀座扩座，适配多批次密集育苗节奏。",
+    keyBig:"低温环境主控板自动开启空调加温，高温环境自动开启空调降温除湿；勤除蚕沙、严控密度，适配高频批次周转。",
+    notice:"小蚕忌主控板参数偏移导致温湿度异常，易发育迟缓大小分化；大蚕忌空调调控失效闷热密闭，冬夏完全依靠空调调控，禁止极端自然环境养殖。"
+  },
+  {
+    code:"CAN-002-JS-HY-01",
+    name:"菁松×皓月（春用优质种）",
+    match:"秋丰×白玉、春蕾×镇珠",
+    area:"<span class='area-national'>全国各蚕区通用</span>，适配江浙、四川、山东等主产区",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"全季节适配春用品种，早春、春季品质最优；夏、冬季完全依靠主控板控制空调实现恒温恒湿，不受外界气温限制。",
+    tempSmall:"25‑27℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"22.5‑24.5℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控环境，设备调控容错率高，丝质稳定，不喜极端高温闷热。",
+    keySmall:"远程平台设置目标温湿度，主控板驱动空调持续维持环境稳定，减少环境波动；及时清理残叶。",
+    keyBig:"大蚕期主控板控制空调开启除湿模式，拉大干湿差；根据批次节奏及时扩座。",
+    notice:"设备不可长时间停机；夏季温度超过30℃时主控板必须自动触发空调强制降温。"
+  },
+  {
+    code:"CAN-004-LYG-2H-01",
+    name:"两广二号（耐高温强健种）",
+    match:"781×7532、锦绣×潇湘、金蚕1号",
+    area:"<span class='area-national'>南方全域通用</span>，两广、福建、江西、浙南适配",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"夏、秋季节主力品种，夏天依靠主控板驱动空调强制降温除湿，实现高温环境稳产；早春、春季、冬季空调加温实现反季节生产。",
+    tempSmall:"26‑27.5℃，湿度85%‑90%（空调执行主控板高温稳控）",
+    tempBig:"24‑26℃，湿度76%‑82%（空调执行主控板高温稳控）",
+    climate:"耐高温高湿，抗逆强，适合室内设备调控高温养殖车间。",
+    keySmall:"远程平台可实时查看采集数据，主控板自动调节空调输出功率稳定温湿度；及时清理残叶。",
+    keyBig:"主控板加大空调除湿通风频次；勤除沙，高温季节稀座养殖。",
+    notice:"夏季不能关闭空调设备；多雨季节依靠空调除湿控制蚕座湿度。"
+  },
+  {
+    code:"CAN-003-HJJ-01",
+    name:"黄金茧（彩色茧特色品种）",
+    match:"特色搭配：星丝路1号",
+    area:"<span class='area-zj'>浙江杭嘉湖、衢州特色养殖核心品种</span>，全国高端特色茧智能养殖产区适配",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"特色茧品种，适宜早春、春季、晚秋、冬季饲养；夏、早秋、中秋高温环境不建议大规模养殖，必须依靠主控板+空调做精细化闭环控制。",
+    tempSmall:"26‑27.5℃，湿度83%‑88%（空调执行主控板精控）",
+    tempBig:"24‑26℃，湿度73%‑78%（空调执行主控板精控）",
+    climate:"要求环境波动极小，完全依赖室内设备闭环调控，不适应外界自然气候波动。",
+    keySmall:"云端预设参数，主控板闭环控制空调，严控昼夜温差；桑叶鲜嫩无变质。",
+    keyBig:"稀座养殖，主控板控制空调持续稳定除湿通风；严格管控桑叶品质。",
+    notice:"禁止空调频繁启停；温湿度大幅波动会直接造成茧色变异，品质下降。"
+  },
+  {
+    code:"CAN-005-QH-P30-01",
+    name:"秋华×平30（抗微粒子专养种）",
+    match:"秋丰×白玉、华康1号",
+    area:"<span class='area-national'>全国蚕区通用</span>，江浙皖川重点推广",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"专养抗微粒子病品种，适合全季节多批次循环车间，主控板空调稳定环境降低蚕病风险，夏、冬季均可反季节饲养。",
+    tempSmall:"25.5‑27℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.8℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控环境，抗病性能突出，不宜长期高温闷热。",
+    keySmall:"平台锁定参数，主控板维持环境平稳，做好前期消毒，匀座防大小蚕分化。",
+    keyBig:"主控板控制空调加强除湿通风，勤除蚕沙，降低蚕座病原积累。",
+    notice:"不可超温饲养；空调故障闷热环境极易诱发其他细菌性病害。"
+  },
+  {
+    code:"CAN-006-HK1-01",
+    name:"华康1号（抗血液型脓病）",
+    match:"华康3号、秋华×平30",
+    area:"<span class='area-national'>全国蚕区推广</span>，适合病害多发车间",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"高抗脓病专用品种，适配全季节高频连续多批次生产，依靠主控板空调稳定环境进一步压低发病概率。",
+    tempSmall:"25‑26.8℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"22.8‑24.5℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内设备调控，抗逆强，丝质中等偏优。",
+    keySmall:"远程监控环境数据，主控板避免温湿度骤变，严格桑叶消毒处理。",
+    keyBig:"大蚕期加大空调通风除湿，稀座饲养，减少蚕体相互接触感染。",
+    notice:"抗病不等于免病，不可放松车间消毒；禁止长期高湿密闭。"
+  },
+  {
+    code:"CAN-007-HK3-01",
+    name:"华康3号（多抗性强健种）",
+    match:"华康1号、秋丰×白玉",
+    area:"<span class='area-national'>全国蚕区适配</span>，适合连续多批养蚕车间",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"多抗性品种，适配全季节高频循环模式，主控板空调闭环管控保障各季节批次衔接。",
+    tempSmall:"25.2‑26.9℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.7℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控环境，综合抗逆优秀，对设备波动耐受度较好。",
+    keySmall:"平台预设小蚕专用参数，主控板平稳运行，做好眠起处理。",
+    keyBig:"空调系统保障大蚕通风除湿，批次间隙做好车间消杀。",
+    notice:"高温超30℃必须强制空调降温，否则依旧会出现发病增多。"
+  },
+  {
+    code:"CAN-008-CL-ZZ-01",
+    name:"春蕾×镇珠（春用丝质优种）",
+    match:"菁松×皓月、苏5×苏6",
+    area:"<span class='area-national'>江浙、川渝、山东主产区</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"春用优质丝茧品种，适宜早春、春季、晚秋、冬季；夏、早秋、中秋高温季节不宜大规模投产，冬季依靠空调实现反季节优质茧生产。",
+    tempSmall:"25‑26.5℃，湿度84%‑88%（空调执行主控板精控）",
+    tempBig:"22.5‑24.2℃，湿度73%‑78%（空调执行主控板精控）",
+    climate:"室内低波动环境，怕持续高温高湿。",
+    keySmall:"主控板严控昼夜温差，桑叶品质优先，残叶及时清理。",
+    keyBig:"大蚕拉大干湿差，空调优先除湿，及时扩座。",
+    notice:"夏、早秋、中秋高温季节不建议主力使用；温湿度波动大会直接降低茧丝质量。"
+  },
+  {
+    code:"CAN-009‑781‑7532‑01",
+    name:"781×7532（夏秋强健种）",
+    match:"两广二号、锦绣×潇湘",
+    area:"<span class='area-national'>南方多省蚕区</span>，浙南、两广、江西适配",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"传统夏秋强健品种，夏、早秋、中秋表现最优；早春、春季、晚秋、冬季依靠车间空调调控实现反季节饲养。",
+    tempSmall:"25.8‑27.2℃，湿度85%‑90%（空调执行主控板高温稳控）",
+    tempBig:"23.5‑25.3℃，湿度75%‑81%（空调执行主控板高温稳控）",
+    climate:"室内环境，耐高温高湿，抗逆较好。",
+    keySmall:"平台实时监测，空调稳定小蚕环境，做好匀座。",
+    keyBig:"高温时段空调加强通风除湿，勤除沙稀座。",
+    notice:"持续超31℃会大幅降低产量，空调不可停机。"
+  },
+  {
+    code:"CAN-010-JX‑XX‑01",
+    name:"锦绣×潇湘（南方夏秋专用）",
+    match:"两广二号、781×7532",
+    area:"<span class='area-national'>南方蚕区</span>，湖南、江西、浙南、两广",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"南方选育夏秋品种，夏、早秋、中秋适配性最好；早春、春季、晚秋、冬季借助主控板联动空调完成反季节养殖。",
+    tempSmall:"26‑27.3℃，湿度85%‑90%（空调执行主控板高温稳控）",
+    tempBig:"23.8‑25.5℃，湿度76%‑81%（空调执行主控板高温稳控）",
+    climate:"室内可控高温环境，抗高温高湿能力强。",
+    keySmall:"主控板稳定小蚕温湿度，严防桑叶发酵变质。",
+    keyBig:"空调加大通风除湿频次，降低蚕座积热积湿。",
+    notice:"高湿不通风环境极易爆发僵病，不能只加温不除湿。"
+  },
+  {
+    code:"CAN-011‑SX‑CF‑01",
+    name:"苏秀×春丰（江浙春秋兼用）",
+    match:"秋丰×白玉、浙蚕1号",
+    area:"<span class='area-zj'>浙江、江苏核心蚕区</span>，<span class='area-national'>华东蚕区推广</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"华东选育春秋兼用，全季节均可室内车间饲养，空调主控板保障全年循环生产。",
+    tempSmall:"25.3‑26.8℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.6℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内低波动环境，综合性状均衡。",
+    keySmall:"平台预设参数，主控板平稳过渡眠期温湿度，匀座扩座及时。",
+    keyBig:"大蚕空调加强除湿通风，适配高频批次周转节奏。",
+    notice:"忌大蚕期闷热密闭，空调故障会快速出现发病增多。"
+  },
+  {
+    code:"CAN-012‑YC1‑01",
+    name:"渝蚕1号（西南春秋兼用）",
+    match:"川蚕26号、云蚕7×云蚕8",
+    area:"<span class='area-national'>重庆、四川、贵州西南蚕区</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"西南地区选育品种，全季节室内车间可养，主控板空调完成除湿调温实现多季节养殖。",
+    tempSmall:"25.2‑26.7℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"22.8‑24.5℃，湿度73%‑78%（空调执行主控板设定）",
+    climate:"室内高湿可控环境，耐湿度偏高环境，怕闷热。",
+    keySmall:"主控板重点管控湿度，空调及时除湿，严防蚕座霉变。",
+    keyBig:"大蚕优先开启空调除湿模式，勤除蚕沙。",
+    notice:"湿度长期高于82%大蚕期极易爆发曲霉、僵病。"
+  },
+  {
+    code:"CAN-013‑CC26‑01",
+    name:"川蚕26号（四川优质丝茧种）",
+    match:"渝蚕1号、云蚕7×云蚕8",
+    area:"<span class='area-national'>四川及西南蚕区</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"西南优质春茧品种，适宜早春、春季、晚秋、冬季；夏、早秋、中秋高温季节不做主推，冬季依靠空调实现反季节优质茧产出。",
+    tempSmall:"25‑26.5℃，湿度83%‑88%（空调执行主控板精控）",
+    tempBig:"22.4‑24.1℃，湿度73%‑77%（空调执行主控板精控）",
+    climate:"室内低波动环境，对高温高湿耐受弱。",
+    keySmall:"主控板严控温差，保障小蚕发育整齐，桑叶鲜嫩。",
+    keyBig:"大蚕期空调拉大干湿差，做好扩座稀座。",
+    notice:"夏、早秋、中秋高温季节慎用；温湿度剧烈波动直接损伤茧丝品质。"
+  },
+  {
+    code:"CAN-014‑HC7‑01",
+    name:"湖蚕7号（浙江地方强健种）",
+    match:"秋丰×白玉、苏秀×春丰",
+    area:"<span class='area-zj'>浙江杭嘉湖传统蚕区</span>，华东适配",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"浙江本地选育传统品种，全季节室内车间均可饲养，主控板空调保障多季节循环。",
+    tempSmall:"25.4‑26.9℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.7℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控环境，适应性强，适合江浙车间条件。",
+    keySmall:"平台锁定参数，主控板平稳运行，眠起处理到位。",
+    keyBig:"空调加强大蚕通风除湿，适配连续批次周转。",
+    notice:"禁止大蚕环境闷热，设备故障会造成减产。"
+  },
+  {
+    code:"CAN-015‑H7H8‑01",
+    name:"杭7×杭8（浙江老优质组合）",
+    match:"湖蚕7号、浙蚕1号",
+    area:"<span class='area-zj'>浙江蚕区为主</span>，华东可引种饲养",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"传统春用优质组合，适宜早春、春季、晚秋、冬季；夏、早秋、中秋高温季节不宜主力使用，空调主控板实现反季节春茧品质。",
+    tempSmall:"25‑26.4℃，湿度83%‑88%（空调执行主控板精控）",
+    tempBig:"22.4‑24.0℃，湿度73%‑77%（空调执行主控板精控）",
+    climate:"室内低波动环境，不耐持续高温。",
+    keySmall:"主控板严控昼夜温差，保障小蚕发育齐一。",
+    keyBig:"空调拉大干湿差，稀座饲养，保障茧丝品质。",
+    notice:"夏、早秋、中秋高温季节不宜主力使用；超温会严重降低茧质。"
+  },
+  {
+    code:"CAN-016‑S5S6‑01",
+    name:"苏5×苏6（江苏春用优质）",
+    match:"春蕾×镇珠、菁松×皓月",
+    area:"<span class='area-national'>江苏、山东、安徽等华东蚕区</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"华东传统春用种，适宜早春、春季、晚秋、冬季；夏、早秋、中秋高温环境茧质下降，依靠主控板空调稳定环境实现冬季反季节优质茧生产。",
+    tempSmall:"25‑26.5℃，湿度83%‑88%（空调执行主控板精控）",
+    tempBig:"22.5‑24.1℃，湿度73%‑78%（空调执行主控板精控）",
+    climate:"室内低波动环境，怕持续高温闷热。",
+    keySmall:"平台预设小蚕参数，主控板减少环境扰动，桑叶质量优先。",
+    keyBig:"大蚕空调优先除湿，拉大干湿差，及时扩座。",
+    notice:"夏、早秋、中秋不适合作为主力品种，高温环境茧质快速下降。"
+  },
+  {
+    code:"CAN-017‑Y7Y8‑01",
+    name:"云蚕7×云蚕8（云南高原蚕种）",
+    match:"渝蚕1号、川蚕26号",
+    area:"<span class='area-national'>云南、贵州高原蚕区</span>，室内智能车间可全国引种",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"高原选育品种，室内空调主控板管控下全季节均可饲养，脱离高原气候适配多季节循环养蚕。",
+    tempSmall:"25.1‑26.6℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"22.7‑24.4℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控环境，对设备波动耐受中等。",
+    keySmall:"主控板保证温湿度平稳，避免昼夜温差过大。",
+    keyBig:"大蚕空调加强通风除湿，勤除蚕沙。",
+    notice:"温差剧烈波动容易造成眠起不齐，空调不可频繁启停。"
+  },
+  {
+    code:"CAN-018‑WC1‑01",
+    name:"皖蚕1号（安徽春秋兼用）",
+    match:"苏秀×春丰、秋丰×白玉",
+    area:"<span class='area-national'>安徽及华中蚕区</span>，华东智能车间适配",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"华中选育春秋兼用，综合抗逆均衡，全季节适配项目循环养蚕模式。",
+    tempSmall:"25.3‑26.8℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.6℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控环境，综合抗逆表现均衡。",
+    keySmall:"平台预设参数，主控板平稳度过眠期，及时匀座。",
+    keyBig:"大蚕空调加强通风除湿，适配批次快速周转。",
+    notice:"大蚕忌高温闷热，空调故障易爆发蚕病。"
+  },
+  {
+    code:"CAN-019‑GC2‑01",
+    name:"桂蚕2号（广西耐高温种）",
+    match:"两广二号、锦绣×潇湘",
+    area:"<span class='area-national'>两广、福建、浙南高温蚕区</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"广西选育耐高温品种，夏、早秋、中秋表现最优；早春、春季、晚秋、冬季依靠车间加温实现反季节饲养。",
+    tempSmall:"26‑27.4℃，湿度85%‑90%（空调执行主控板高温稳控）",
+    tempBig:"24‑25.6℃，湿度76%‑82%（空调执行主控板高温稳控）",
+    climate:"室内高温高湿可控环境，抗热抗湿能力强。",
+    keySmall:"主控板稳定高温环境，严防桑叶发热变质。",
+    keyBig:"空调加大通风除湿，高温季节坚持稀座勤除沙。",
+    notice:"即使耐高温品种，长期超过32℃依旧严重减产，空调不可关停。"
+  },
+  {
+    code:"CAN-020‑JC2‑01",
+    name:"金蚕2号（彩色茧金黄茧）",
+    match:"黄金茧、星丝路2号",
+    area:"<span class='area-zj'>浙江特色茧养殖区</span>，全国高端特色智能车间",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"第二代金黄色特色茧，适宜早春、春季、晚秋、冬季；夏、早秋、中秋高温不宜饲养，必须主控板+空调闭环精细管控。",
+    tempSmall:"25.8‑27.2℃，湿度83%‑88%（空调执行主控板精控）",
+    tempBig:"23.8‑25.4℃，湿度73%‑78%（空调执行主控板精控）",
+    climate:"室内极小波动环境，外界自然气候不可直接饲养。",
+    keySmall:"云端锁定参数，严控昼夜温差，桑叶必须鲜嫩。",
+    keyBig:"稀座饲养，空调持续稳定除湿通风，严控桑叶品质。",
+    notice:"空调频繁启停、温湿度跳变会造成茧色淡化、色差严重，丧失商品价值。"
+  },
+  {
+    code:"CAN‑021‑XSL2‑01",
+    name:"星丝路2号（项目专用特色蚕）",
+    match:"黄金茧、金蚕2号",
+    area:"<span class='area-zj'>浙江衢州、杭嘉湖丝路四季项目示范车间</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"适配本项目智能车间的特色试验蚕种，适宜早春、春季、晚秋、冬季；夏、早秋、中秋高温环境不建议饲养，完全依靠主控板空调闭环调控。",
+    tempSmall:"25.7‑27.1℃，湿度83%‑88%（空调执行主控板精控）",
+    tempBig:"23.7‑25.3℃，湿度73%‑78%（空调执行主控板精控）",
+    climate:"室内低波动精密环境，抗外界扰动弱。",
+    keySmall:"平台锁定全套参数，禁止随意修改，桑叶严格筛选。",
+    keyBig:"稀座，空调稳定除湿通风，批次间隙彻底消毒。",
+    notice:"环境参数漂移直接影响茧色与丝质，异常必须平台告警提醒。"
+  },
+  {
+    code:"CAN‑022‑ZC1‑01",
+    name:"浙蚕1号（浙江育成春秋兼用）",
+    match:"苏秀×春丰、湖蚕7号",
+    area:"<span class='area-zj'>浙江全省蚕区主推</span>，华东智能车间可推广",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"本省新育成品种，兼顾产量丝质，全季节适配浙江全年循环养蚕模式。",
+    tempSmall:"25.4‑26.9℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.7℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控车间，综合性状均衡，适配本地桑叶条件。",
+    keySmall:"主控板平稳控制眠期环境，及时匀座扩座。",
+    keyBig:"大蚕空调加强通风除湿，适配高频批次周转。",
+    notice:"大蚕闷热密闭环境容易爆发细菌性胃肠病，设备不能故障停机。"
+  },
+  {
+    code:"CAN‑023‑SH‑ZY‑01",
+    name:"苏豪×钟晔（高丝量春用种）",
+    match:"菁松×皓月、春蕾×镇珠",
+    area:"<span class='area-national'>江苏、浙江、山东华东蚕区</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"高茧层率春用品种，适宜早春、春季、晚秋、冬季；夏、早秋、中秋高温会降低茧层量，依靠空调主控板实现冬季反季节饲养。",
+    tempSmall:"25‑26.5℃，湿度83%‑88%（空调执行主控板精控）",
+    tempBig:"22.4‑24.1℃，湿度73%‑78%（空调执行主控板精控）",
+    climate:"室内低波动环境，不耐持续高温。",
+    keySmall:"主控板严控昼夜温差，保障小蚕发育整齐，桑叶品质优先。",
+    keyBig:"大蚕期空调拉大干湿差，稀座饲养，发挥高丝量潜力。",
+    notice:"夏、早秋、中秋高温会显著降低茧层量，不适合作为主力品种。"
+  },
+  {
+    code:"CAN‑024‑YF‑RX‑01",
+    name:"玉丰×润雪（白茧强健优质种）",
+    match:"秋丰×白玉、浙蚕1号",
+    area:"<span class='area-national'>全国多蚕区室内智能车间</span>，浙江示范饲养",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"白茧优质强健新品种，兼顾抗逆和丝质，全季节适配全年多批次智能养蚕车间。",
+    tempSmall:"25.3‑26.8℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.6℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内可控环境，综合抗逆均衡。",
+    keySmall:"平台预设参数，主控板平稳运行，眠期温湿度平缓过渡。",
+    keyBig:"大蚕空调加强通风除湿，勤除沙适配批次周转。",
+    notice:"忌大蚕高温闷热，空调失效会增大发病概率。"
+  },
+  {
+    code:"CAN‑025‑TF‑MJ‑01",
+    name:"泰丰×明晶（多批次适配强健种）",
+    match:"华康系列、秋华×平30",
+    area:"<span class='area-national'>全国室内智能养蚕车间引种使用</span>",
+    batch:"<span class='batch-tag batch‑earlySpring'>早春</span><span class='batch-tag batch‑spring'>春</span><span class='batch-tag batch‑summer'>夏</span><span class='batch-tag batch‑earlyAutumn'>早秋</span><span class='batch-tag batch‑midAutumn'>中秋</span><span class='batch-tag batch‑lateAutumn'>晚秋</span><span class='batch-tag batch‑winter'>冬季</span>",
+    batchDesc:"专为连续多批次循环养蚕选育，全季节室内车间均可饲养，抗逆综合性能强，适合高频生产模式。",
+    tempSmall:"25.4‑26.9℃，湿度84%‑89%（空调执行主控板设定）",
+    tempBig:"23‑24.7℃，湿度74%‑79%（空调执行主控板设定）",
+    climate:"室内设备调控环境，对小幅参数波动耐受较好。",
+    keySmall:"主控板闭环维稳，做好匀座，减少大小蚕差异。",
+    keyBig:"大蚕空调强化通风除湿，批次间隙彻底消杀。",
+    notice:"抗病不等于免病，设备长期高湿密闭依旧会爆发蚕病。"
+  }
+];
+
+const stageDataList = [
+  {
+    stageId:"0",
+    stage:"蚕卵期",
+    temp:"24~26℃",
+    humidity:"75~85%",
+    days:"8~10天",
+    vent:"主控板根据传感器数据联动空调完成换气，低风量，避免直吹蚕卵，所有环境数据上传远程监控平台。",
+    pest:"卵面霉菌、死卵、孵化不齐",
+    prevent:"催青室提前消毒，主控板闭环维持温湿度，平台实时监测报警，避免环境扰动。",
+    note:"蚕卵催青对环境敏感，主控板、空调不可随意停机，严防温湿度骤变。"
+  },
+  {
+    stageId:"1",
+    stage:"1龄蚕（收蚁后）",
+    temp:"27~28℃",
+    humidity:"85~90%",
+    days:"3~4天",
+    vent:"主控板根据传感器数据联动空调完成换气，低风量，避免直吹蚕体，所有环境数据上传远程监控平台。",
+    pest:"蚁蚕虚弱、蚕座霉菌、轻微细菌性病害",
+    prevent:"车间提前消毒，主控板闭环维持温湿度，平台实时监测报警，避免环境扰动。",
+    note:"小蚕对环境极敏感，主控板、空调不可随意停机，桑叶保持鲜嫩。"
+  },
+  {
+    stageId:"2",
+    stage:"2龄蚕",
+    temp:"26~27℃",
+    humidity:"85~90%",
+    days:"3~3天",
+    vent:"主控板调节空调通风档位，保证空气流通，全部数据云端记录保存。",
+    pest:"眠起不齐、曲霉病、小额僵病",
+    prevent:"设备持续稳定运行，眠期主控板平缓调整设定值；及时扩座匀座。",
+    note:"龄期切换，主控板参数平缓过渡，禁止空调剧烈升降温。"
+  },
+  {
+    stageId:"3",
+    stage:"3龄蚕（小蚕末期）",
+    temp:"25~26℃",
+    humidity:"80~85%",
+    days:"3~4天",
+    vent:"主控板调高空调通风，拉大室内干湿差，为大蚕做环境准备。",
+    pest:"细菌性胃肠病、蚕座潮湿霉变",
+    prevent:"依靠空调除湿，主控板湿度阈值触发自动除湿；勤除蚕沙。",
+    note:"小蚕转大蚕关键节点，设备不能出现参数跳变。"
+  },
+  {
+    stageId:"4",
+    stage:"4龄蚕（大蚕初期）",
+    temp:"24~25℃",
+    humidity:"70~80%",
+    days:"4~5天",
+    vent:"主控板调高空调风量，强化换气，满足大蚕高代谢散热需求。",
+    pest:"脓病、僵病、细菌性病害高发",
+    prevent:"主控板24小时闭环控制，平台异常自动报警；定期车间消毒。",
+    note:"大蚕代谢旺盛，空调系统不可故障停机。"
+  },
+  {
+    stageId:"5",
+    stage:"5龄蚕（壮蚕期、结茧前期）",
+    temp:"24~25℃",
+    humidity:"70~80%",
+    days:"7~9天",
+    vent:"主控板控制空调强通风强除湿，拉大干湿差，保障壮蚕发育。",
+    pest:"各类病害集中爆发、熟蚕不齐、结茧不良",
+    prevent:"远程平台24h监控，主控板自动修正偏差，异常推送告警；勤除沙稀座。",
+    note:"产量品质关键期，严禁主控板断电、空调停机。"
+  },
+  {
+    stageId:"6",
+    stage:"上簇期",
+    temp:"22~25℃",
+    humidity:"70~75%",
+    days:"2~3天",
+    vent:"主控板设定结茧模式，空调优先除湿，保持室内干爽。",
+    pest:"霉茧、烂茧、薄皮茧、结茧位置不良",
+    prevent:"提前在平台设置上簇专属参数，主控板锁定参数，不允许人工随意改动。",
+    note:"结茧期参数必须稳定，所有数据上传平台留痕。"
+  },
+  {
+    stageId:"7",
+    stage:"蛹期",
+    temp:"22~25℃",
+    humidity:"70~75%",
+    days:"10~14天",
+    vent:"主控板维持低风量换气，保持环境干爽，避免高湿闷蛹，数据上传监控平台。",
+    pest:"蛹体霉变、死蛹、蛹发育不良",
+    prevent:"主控板严格管控湿度，空调做好除湿；防止震动冲击蛹体。",
+    note:"蛹期忌震动、高湿，环境波动会影响蛾羽化与产卵质量。"
+  }
+];
+
+function renderBreedTable(){
+  const tbody = document.getElementById("breedBody");
+  tbody.innerHTML = "";
+  breedDataList.forEach(item=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+    <td>${item.code}</td>
+    <td><span class="species-tag">${item.name}</span></td>
+    <td>${item.match}</td>
+    <td>${item.area}</td>
+    <td>${item.batch}</td>
+    <td>${item.batchDesc}</td>
+    <td>${item.tempSmall}</td>
+    <td>${item.tempBig}</td>
+    <td>${item.climate}</td>
+    <td>${item.keySmall}</td>
+    <td>${item.keyBig}</td>
+    <td>${item.notice}</td>
+    `;
+    tbody.appendChild(tr);
+  })
+}
+
+function renderStageTable(){
+  const tbody = document.getElementById("stageBody");
+  tbody.innerHTML = "";
+  stageDataList.forEach(item=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+    <td>${item.stageId}</td>
+    <td>${item.stage}</td>
+    <td>${item.temp}</td>
+    <td>${item.humidity}</td>
+    <td>${item.days}</td>
+    <td>${item.vent}</td>
+    <td>${item.pest}</td>
+    <td>${item.prevent}</td>
+    <td>${item.note}</td>
+    `;
+    tbody.appendChild(tr);
+  })
+}
+
+document.getElementById("searchBreed").addEventListener("input",function(){
+  const kw = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#breedBody tr");
+  rows.forEach(r=>{
+    const text = r.innerText.toLowerCase();
+    r.style.display = text.includes(kw)?"table-row":"none";
+  })
+})
+
+document.getElementById("searchStage").addEventListener("input",function(){
+  const kw = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#stageBody tr");
+  rows.forEach(r=>{
+    const text = r.innerText.toLowerCase();
+    r.style.display = text.includes(kw)?"table-row":"none";
+  })
+})
+
+window.onload = function(){
+  renderBreedTable();
+  renderStageTable();
+}
+</script>
+</body>
+</html>
